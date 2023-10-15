@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Data Asylum</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: monospace;
+			background-color: #f4f4f4;
+
+		}
+
+
+		.container {
+			display: flex;
+			align-items: center;
+			align-content: space-evenly;
+		}
+
+		.container>div {
+			width: 75%;
+			margin: 10% 4%;
+		}
+
+
+		.navbar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			background-color: #333;
+			color: white;
+			padding: 8px;
+			text-align: center;
+
+		}
+
+		.encryption-form {
+			flex: 1;
+			background-color: #fff;
+			border-radius: 5px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.decryption-form {
+			flex: 1;
+			margin-left: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group label {
+			display: block;
+			font-weight: bold;
+		}
+
+		.form-group input {
+			width: 80%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		.form-group button {
+			background-color: #007BFF;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.form-group button:hover {
+			background-color: #0056b3;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="navbar">
+		<h1>Data Asylum</h1>
+	</div>
+	<div class="forms">
+
+		<div class="container">
+			<div class="encryption-form">
+				<h2>Text Encryption</h2>
+				<form action="#" method="post">
+					<div class="form-group">
+						<label for="plaintext">Plaintext (Mandatory):</label>
+						<input type="text" name="plaintext" id="plaintext" required>
+					</div>
+					<div class="form-group">
+						<label for="key">Key (Optional):</label>
+						<input type="text" name="key" id="key">
+					</div>
+					<div class="form-group">
+						<button type="submit">Encrypt</button>
+					</div>
+				</form>
+			</div>
+			<div class="decryption-form">
+				<h2>Text Decryption</h2>
+				<form action="#" method="post">
+					<div class="form-group">
+						<label for="encryptedText">Encrypted Text (Mandatory):</label>
+						<input type="text" name="encryptedText" id="encryptedText" required>
+					</div>
+					<div class="form-group">
+						<label for="decryptionKey">Decryption Key (Optional):</label>
+						<input type="text" name="decryptionKey" id="decryptionKey">
+					</div>
+					<div class="form-group">
+						<button type="submit">Decrypt</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<div class="container">
+			<div class="encryption-form">
+				<h2>File Encryption</h2>
+				<form action="#" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="file">Select a File (Mandatory):</label>
+						<input type="file" name="file" id="file" required>
+					</div>
+					<div class="form-group">
+						<label for="encryptionKey">Encryption Key (Optional):</label>
+						<input type="text" name="encryptionKey" id="encryptionKey">
+					</div>
+					<div class="form-group">
+						<button type="submit">Encrypt</button>
+					</div>
+				</form>
+			</div>
+			<div class="decryption-form">
+				<h2>File Decryption</h2>
+				<form action="#" method="post">
+					<div class="form-group">
+						<label for="encryptedFile">Select an Encrypted File (Mandatory):</label>
+						<input type="file" name="encryptedFile" id="encryptedFile" required>
+					</div>
+					<div class="form-group">
+						<label for="decryptionKey">Decryption Key (Optional):</label>
+						<input type="text" name="decryptionKey" id="decryptionKey">
+					</div>
+					<div class="form-group">
+						<button type="submit">Decrypt</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

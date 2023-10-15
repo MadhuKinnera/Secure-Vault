@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Encrypt File</title>
+</head>
+<body>
+    <h1>File Upload Form</h1>
+
+    <form action="/encryptFileProcess" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="key">Key:</label>
+            <input type="text" id="key" name="key">
+        </div>
+        <br>
+
+        <div>
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required>
+        </div>
+        <br>
+
+        <input type="submit" value="Encrypt File">
+    </form>
+</body>
+</html>

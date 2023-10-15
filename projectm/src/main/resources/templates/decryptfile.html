@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Decrypt File</title>
+</head>
+
+<body>
+	<h1>File Upload Form Decryption</h1>
+
+	<form action="/decryptFileProcess" method="post" enctype="multipart/form-data">
+		<div>
+			<label for="key">Key:</label>
+			<input type="text" id="key" name="key">
+		</div>
+		<br>
+
+		<div>
+			<label for="file">File:</label>
+			<input type="file" id="file" name="file" required>
+		</div>
+		<br>
+
+		<div>
+			<h4>Extension</h4>
+			<input type="radio" id="jpg" name="extension" value="jpg">
+			<label for="jpg">JPG</label><br>
+			<input type="radio" id="png" name="extension" value="png">
+			<label for="png">PNG</label><br>
+			<input type="radio" id="mp4" name="extension" value="mp4">
+			<label for="mp4">MP4</label>
+			<input type="radio" id="pdf" name="extension" value="pdf">
+			<label for="pdf">PDF</label>
+		</div>
+		<br>
+
+
+
+		<input type="submit" value="Decrypt File">
+	</form>
+</body>
+
+</html>

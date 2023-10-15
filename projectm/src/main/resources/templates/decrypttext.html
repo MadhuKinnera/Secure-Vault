@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Page</title>
+</head>
+<body>
+    <h1>Input Page</h1>
+    <form action="/decryptTextProcess" method="post">
+        <label for="encryptedText">Enter Encrypted Text:</label>
+        <input type="text" id="encryptedText" name="encryptedText" required>
+        <br>
+        <label for="key">Enter Key:</label>
+        <input type="text" id="secretKey" name="secretKey">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
