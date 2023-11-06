@@ -16,7 +16,7 @@ In an age of increasing digital interconnectivity, safeguarding sensitive data i
 
 ### Installation
 
-1. clone this URL by opening any terminal :
+1. clone this URL by opening any terminal : https://github.com/MadhuKinnera/dataasylum.git
 2. import the project into your STS or Eclipse
 3. Run the Project. You can use the application and its features
 
