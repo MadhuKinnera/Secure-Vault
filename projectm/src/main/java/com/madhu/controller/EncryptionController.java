@@ -1,7 +1,5 @@
 package com.madhu.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.madhu.exception.EncryptionException;
 import com.madhu.service.EncryptionService;
@@ -75,7 +74,7 @@ public class EncryptionController {
 	@PostMapping("/encryptFileProcess")
 	@ResponseBody
 	public ResponseEntity<Resource> encryptFile(@RequestParam("file") MultipartFile plainFile,
-			@RequestParam(required = false) String secretKey, Model model) throws EncryptionException, Exception {
+			@RequestParam(required = false) String secretKey, RedirectAttributes model) throws EncryptionException, Exception {
 
 		System.out.println("Inside Encryption of file");
 
@@ -86,8 +85,7 @@ public class EncryptionController {
 
 			System.out.println("file exist ? " + file.exists());
 
-			try {
-				// Load the file as a resource
+		
 				Resource resource = new UrlResource(file.toURI());
 
 				if (resource.exists()) {
@@ -100,22 +98,20 @@ public class EncryptionController {
 					return ResponseEntity.ok().headers(headers).body(resource);
 				} else {
 					// Handle the case where the file does not exist
-					return ResponseEntity.notFound().build();
+					return ResponseEntity.status(302).header("Location", "/").build();
 				}
-			} catch (IOException e) {
-				// Handle exceptions, e.g., file not found or other errors
-				return ResponseEntity.status(500).body(null);
-			}
+
 		} catch (Exception e) {
-			model.addAttribute("encryptFileError", e.getMessage());
-			return null;
+			System.out.println("The message is "+e.getMessage());
+			model.addFlashAttribute("encryptFileError", e.getMessage());
+			return ResponseEntity.status(302).header("Location", "/").build();
 		}
 
 	}
 
 	@PostMapping("/decryptFileProcess")
 	ResponseEntity<Resource> decryptFile(@RequestParam("file") MultipartFile encryptedFile,
-			@RequestParam(required = false) String secretKey, Model model) throws EncryptionException, Exception {
+			@RequestParam(required = false) String secretKey, RedirectAttributes model) throws EncryptionException, Exception {
 
 		System.out.println("Inside Decryption of file");
 
@@ -129,7 +125,7 @@ public class EncryptionController {
 
 			System.out.println("the file path is " + filePath);
 
-			try {
+			
 				// Load the file as a resource
 				Resource resource = new UrlResource(filePath.toUri());
 
@@ -148,16 +144,12 @@ public class EncryptionController {
 				} else {
 					// Handle the case where the file does not exist
 					System.out.println("inside not found ");
-					return ResponseEntity.notFound().build();
+					return ResponseEntity.status(302).header("Location", "/").build();
 				}
-			} catch (IOException e) {
-				// Handle exceptions, e.g., file not found or other errors
-				System.out.println("Inside catch block");
-				return ResponseEntity.status(500).body(null);
-			}
 		} catch (Exception e) {
-			model.addAttribute("fileDecryptError", e.getMessage());
-			return null;
+			System.out.println("The message is "+e.getMessage());
+			model.addFlashAttribute("fileDecryptError", e.getMessage());
+			return ResponseEntity.status(302).header("Location", "/").build();
 		}
 
 	}
