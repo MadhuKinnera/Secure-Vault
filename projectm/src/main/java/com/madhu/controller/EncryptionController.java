@@ -35,23 +35,6 @@ public class EncryptionController {
 		return "index";
 	}
 
-	@GetMapping("/encryptText")
-	public String displayEncryptionPage() {
-		System.out.println("inside encrypt text display ");
-		return "encrypttext";
-	}
-
-	@GetMapping("/viewresult")
-	public String displayPage() {
-		System.out.println("inside result handler ");
-		return "result";
-	}
-
-	@GetMapping("/decryptText")
-	public String displayDecryptionPage() {
-		return "decrypttext";
-	}
-
 	@PostMapping("/encryptTextProcess")
 	public String encryptText(@RequestParam String plainText, @RequestParam(required = false) String secretKey,
 			Model model) throws EncryptionException, Exception {
@@ -59,10 +42,11 @@ public class EncryptionController {
 		System.out.println("Inside Encryption of Text with text " + plainText + " and key " + secretKey);
 
 		String result = eService.encryptText(plainText, secretKey);
+		System.out.println("The encrypted text is " + result);
 
 		model.addAttribute("encryptedData", result);
 
-		return "result";
+		return "index";
 
 	}
 
@@ -74,19 +58,9 @@ public class EncryptionController {
 
 		String result = eService.decryptText(encryptedText, secretKey);
 
-		model.addAttribute("encryptedData", result);
+		model.addAttribute("decryptedData", result);
 
-		return "result";
-	}
-
-	@GetMapping("/encryptFile")
-	public String encryptFile() {
-		return "encryptfile";
-	}
-
-	@GetMapping("/decryptFile")
-	public String decryptFile() {
-		return "decryptfile";
+		return "index";
 	}
 
 	@PostMapping("/encryptFileProcess")
@@ -127,19 +101,17 @@ public class EncryptionController {
 
 	@PostMapping("/decryptFileProcess")
 	ResponseEntity<Resource> decryptFile(@RequestParam("file") MultipartFile encryptedFile,
-			@RequestParam(required = false) String secretKey, @RequestParam("extension") String extension, Model model)
-			throws EncryptionException, Exception {
+			@RequestParam(required = false) String secretKey, Model model) throws EncryptionException, Exception {
 
 		System.out.println("Inside Decryption of file");
 
 		System.out.println("Encrypted File is " + encryptedFile.getOriginalFilename());
 
-		String fileName = eService.decryptFile(encryptedFile, secretKey, extension);
+		var file = eService.decryptFile(encryptedFile, secretKey).getFile();
 
-		// Define the path to your file
-		Path filePath = Paths.get(uploadLocation + fileName);
+		var filePath = Path.of(file.getPath());
 
-		System.out.println("file path is " + filePath.getFileName());
+		System.out.println("the file path is " + filePath);
 
 		try {
 			// Load the file as a resource

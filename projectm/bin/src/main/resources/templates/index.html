@@ -94,41 +94,35 @@
 		<div class="container">
 			<div class="encryption-form">
 				<h2>Text Encryption</h2>
-				<form action="/encryptTextProcess" method="post">
+				<form action="#" method="post">
 					<div class="form-group">
-						<label for="plainText">Plaintext (Mandatory):</label>
-						<input type="text" name="plainText" id="plainText" required>
+						<label for="plaintext">Plaintext (Mandatory):</label>
+						<input type="text" name="plaintext" id="plaintext" required>
 					</div>
 					<div class="form-group">
-						<label for="secretKey">Key (Optional):</label>
-						<input type="text" name="secretKey" id="secretKey">
+						<label for="key">Key (Optional):</label>
+						<input type="text" name="key" id="key">
 					</div>
 					<div class="form-group">
 						<button type="submit">Encrypt</button>
 					</div>
 				</form>
-				 <div th:if="${encryptedData}">
-					<p>the Encrypted Text is <span th:text="${encryptedData}" th:style="'color: blue;'"></span> </p>
-				 </div>
 			</div>
 			<div class="decryption-form">
 				<h2>Text Decryption</h2>
-				<form action="/decryptTextProcess" method="post">
+				<form action="#" method="post">
 					<div class="form-group">
 						<label for="encryptedText">Encrypted Text (Mandatory):</label>
 						<input type="text" name="encryptedText" id="encryptedText" required>
 					</div>
 					<div class="form-group">
-						<label for="secretKey">Decryption Key (Optional):</label>
-						<input type="text" name="secretKey" id="secretKey">
+						<label for="decryptionKey">Decryption Key (Optional):</label>
+						<input type="text" name="decryptionKey" id="decryptionKey">
 					</div>
 					<div class="form-group">
 						<button type="submit">Decrypt</button>
 					</div>
 				</form>
-				<div th:if="${decryptedData}">
-					<p>the Decrypted Text is <span th:text="${decryptedData}" th:style="'color: blue;'" ></span> </p>
-				 </div>
 			</div>
 		</div>
 
@@ -136,14 +130,14 @@
 		<div class="container">
 			<div class="encryption-form">
 				<h2>File Encryption</h2>
-				<form action="/encryptFileProcess" method="post" enctype="multipart/form-data">
+				<form action="#" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="file">Select a File (Mandatory):</label>
 						<input type="file" name="file" id="file" required>
 					</div>
 					<div class="form-group">
-						<label for="secretKey">Encryption Key (Optional):</label>
-						<input type="text" name="secretKey" id="secretKey">
+						<label for="encryptionKey">Encryption Key (Optional):</label>
+						<input type="text" name="encryptionKey" id="encryptionKey">
 					</div>
 					<div class="form-group">
 						<button type="submit">Encrypt</button>
@@ -152,14 +146,14 @@
 			</div>
 			<div class="decryption-form">
 				<h2>File Decryption</h2>
-				<form action="/decryptFileProcess" method="post" enctype="multipart/form-data">
+				<form action="#" method="post">
 					<div class="form-group">
 						<label for="encryptedFile">Select an Encrypted File (Mandatory):</label>
-						<input type="file" name="file" id="file" required>
+						<input type="file" name="encryptedFile" id="encryptedFile" required>
 					</div>
 					<div class="form-group">
-						<label for="secretKey">Decryption Key (Optional):</label>
-						<input type="text" name="secretKey" id="secretKey">
+						<label for="decryptionKey">Decryption Key (Optional):</label>
+						<input type="text" name="decryptionKey" id="decryptionKey">
 					</div>
 					<div class="form-group">
 						<button type="submit">Decrypt</button>

@@ -1,8 +1,5 @@
 package com.madhu.service;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +13,7 @@ public interface EncryptionService {
 
 	FileSystemResource encryptFile(MultipartFile plainFile, String secretKey) throws EncryptionException, Exception;
 
-	String decryptFile(MultipartFile encryptedFile, String secretKey,String extension) throws EncryptionException, Exception;
+	FileSystemResource decryptFile(MultipartFile encryptedFile, String secretKey) throws EncryptionException, Exception;
 
 
 }

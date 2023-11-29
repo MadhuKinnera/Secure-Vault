@@ -53,16 +53,12 @@ public class EncryptionServiceImpl implements EncryptionService {
 
 		String filename = plainFile.getOriginalFilename();
 
-		int lastIndex = filename.lastIndexOf('.');
-
-		filename = filename.substring(0, lastIndex);
-
 		return utilEncryptFile(filename, secretKey);
 
 	}
 
 	@Override
-	public String decryptFile(MultipartFile encryptedFile, String secretKey, String extension) throws Exception {
+	public FileSystemResource decryptFile(MultipartFile encryptedFile, String secretKey) throws Exception {
 
 		if (secretKey == null)
 			secretKey = defaultKey;
@@ -73,12 +69,15 @@ public class EncryptionServiceImpl implements EncryptionService {
 
 		System.out.println("The full file Name is " + fileName);
 
-		int endIndex = fileName.length() - 5;
+		fileName = fileName.substring(0, fileName.length() - 5);
 
-		fileName = CommonUtils.decrypt(fileName.substring(0, endIndex), secretKey) + "." + extension;
+		fileName = CommonUtils.decrypt(fileName, secretKey);
 
-		System.out.println("the updated final plain file name is " + fileName);
-		return fileName;
+		File file = new File(getPath() +uploadLocation+ fileName);
+
+		System.out.println("the updated final plain file name is " + file.getAbsolutePath());
+		
+		return new FileSystemResource(file);
 
 	}
 
