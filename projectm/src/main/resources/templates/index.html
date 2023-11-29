@@ -110,6 +110,9 @@
 				 <div th:if="${encryptedData}">
 					<p>the Encrypted Text is <span th:text="${encryptedData}" th:style="'color: blue;'"></span> </p>
 				 </div>
+				  <div th:if="${encryptTextError}">
+					 <span th:text="${encryptTextError}" th:style="'color: red;'"></span> 
+				 </div>
 			</div>
 			<div class="decryption-form">
 				<h2>Text Decryption</h2>
@@ -128,6 +131,9 @@
 				</form>
 				<div th:if="${decryptedData}">
 					<p>the Decrypted Text is <span th:text="${decryptedData}" th:style="'color: blue;'" ></span> </p>
+				 </div>
+				  <div th:if="${decryptTextError}">
+					 <span th:text="${decryptTextError}" th:style="'color: red;'"></span> 
 				 </div>
 			</div>
 		</div>
@@ -149,6 +155,9 @@
 						<button type="submit">Encrypt</button>
 					</div>
 				</form>
+				 <div th:if="${encryptFileError}">
+					 <span th:text="${encryptFileError}" th:style="'color: red;'"></span> 
+				 </div>
 			</div>
 			<div class="decryption-form">
 				<h2>File Decryption</h2>
@@ -165,6 +174,9 @@
 						<button type="submit">Decrypt</button>
 					</div>
 				</form>
+				<div th:if="${fileDecryptError}">
+					 <span th:text="${fileDecryptError}" th:style="'color: red;'"></span> 
+				 </div>
 			</div>
 		</div>
 	</div>

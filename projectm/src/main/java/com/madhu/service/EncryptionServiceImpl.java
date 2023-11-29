@@ -97,7 +97,7 @@ public class EncryptionServiceImpl implements EncryptionService {
 
 		System.out.println("the filename is " + filename);
 
-		File file = new File(filename + ".ENCR");
+		File file = new File(getPath()+uploadLocation+filename + ".ENCR");
 
 		file.createNewFile();
 

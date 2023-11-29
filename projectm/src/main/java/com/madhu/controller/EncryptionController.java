@@ -1,8 +1,8 @@
 package com.madhu.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,10 +41,14 @@ public class EncryptionController {
 
 		System.out.println("Inside Encryption of Text with text " + plainText + " and key " + secretKey);
 
-		String result = eService.encryptText(plainText, secretKey);
-		System.out.println("The encrypted text is " + result);
+		try {
+			String result = eService.encryptText(plainText, secretKey);
+			System.out.println("The encrypted text is " + result);
 
-		model.addAttribute("encryptedData", result);
+			model.addAttribute("encryptedData", result);
+		} catch (Exception e) {
+			model.addAttribute("encryptTextError", e.getMessage());
+		}
 
 		return "index";
 
@@ -56,9 +60,14 @@ public class EncryptionController {
 
 		System.out.println("Inside Decryption of Text");
 
-		String result = eService.decryptText(encryptedText, secretKey);
+		try {
 
-		model.addAttribute("decryptedData", result);
+			String result = eService.decryptText(encryptedText, secretKey);
+
+			model.addAttribute("decryptedData", result);
+		} catch (Exception e) {
+			model.addAttribute("decryptTextError", e.getMessage());
+		}
 
 		return "index";
 	}
@@ -70,31 +79,36 @@ public class EncryptionController {
 
 		System.out.println("Inside Encryption of file");
 
-		var file = eService.encryptFile(plainFile, secretKey).getFile();
-
-		System.out.println("the file name is " + file.getAbsolutePath());
-
-		System.out.println("file exist ? " + file.exists());
-
 		try {
-			// Load the file as a resource
-			Resource resource = new UrlResource(file.toURI());
+			var file = eService.encryptFile(plainFile, secretKey).getFile();
 
-			if (resource.exists()) {
-				// Set response headers to trigger the download
+			System.out.println("the file name is " + file.getAbsolutePath());
 
-				HttpHeaders headers = new HttpHeaders();
-				headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+			System.out.println("file exist ? " + file.exists());
 
-				// Return the file as a ResponseEntity with appropriate headers
-				return ResponseEntity.ok().headers(headers).body(resource);
-			} else {
-				// Handle the case where the file does not exist
-				return ResponseEntity.notFound().build();
+			try {
+				// Load the file as a resource
+				Resource resource = new UrlResource(file.toURI());
+
+				if (resource.exists()) {
+					// Set response headers to trigger the download
+
+					HttpHeaders headers = new HttpHeaders();
+					headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+
+					// Return the file as a ResponseEntity with appropriate headers
+					return ResponseEntity.ok().headers(headers).body(resource);
+				} else {
+					// Handle the case where the file does not exist
+					return ResponseEntity.notFound().build();
+				}
+			} catch (IOException e) {
+				// Handle exceptions, e.g., file not found or other errors
+				return ResponseEntity.status(500).body(null);
 			}
-		} catch (IOException e) {
-			// Handle exceptions, e.g., file not found or other errors
-			return ResponseEntity.status(500).body(null);
+		} catch (Exception e) {
+			model.addAttribute("encryptFileError", e.getMessage());
+			return null;
 		}
 
 	}
@@ -107,37 +121,43 @@ public class EncryptionController {
 
 		System.out.println("Encrypted File is " + encryptedFile.getOriginalFilename());
 
-		var file = eService.decryptFile(encryptedFile, secretKey).getFile();
-
-		var filePath = Path.of(file.getPath());
-
-		System.out.println("the file path is " + filePath);
-
 		try {
-			// Load the file as a resource
-			Resource resource = new UrlResource(filePath.toUri());
 
-			System.out.println("the resource is " + resource);
+			var file = eService.decryptFile(encryptedFile, secretKey).getFile();
 
-			System.out.println(resource.getFilename());
+			var filePath = Path.of(file.getPath());
 
-			System.out.println("the resource 2 is " + resource.getFilename());
-			if (resource.exists()) {
-				// Set response headers to trigger the download
-				HttpHeaders headers = new HttpHeaders();
-				headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+			System.out.println("the file path is " + filePath);
 
-				// Return the file as a ResponseEntity with appropriate headers
-				return ResponseEntity.ok().headers(headers).body(resource);
-			} else {
-				// Handle the case where the file does not exist
-				System.out.println("inside not found ");
-				return ResponseEntity.notFound().build();
+			try {
+				// Load the file as a resource
+				Resource resource = new UrlResource(filePath.toUri());
+
+				System.out.println("the resource is " + resource);
+
+				System.out.println(resource.getFilename());
+
+				System.out.println("the resource 2 is " + resource.getFilename());
+				if (resource.exists()) {
+					// Set response headers to trigger the download
+					HttpHeaders headers = new HttpHeaders();
+					headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename());
+
+					// Return the file as a ResponseEntity with appropriate headers
+					return ResponseEntity.ok().headers(headers).body(resource);
+				} else {
+					// Handle the case where the file does not exist
+					System.out.println("inside not found ");
+					return ResponseEntity.notFound().build();
+				}
+			} catch (IOException e) {
+				// Handle exceptions, e.g., file not found or other errors
+				System.out.println("Inside catch block");
+				return ResponseEntity.status(500).body(null);
 			}
-		} catch (IOException e) {
-			// Handle exceptions, e.g., file not found or other errors
-			System.out.println("Inside catch block");
-			return ResponseEntity.status(500).body(null);
+		} catch (Exception e) {
+			model.addAttribute("fileDecryptError", e.getMessage());
+			return null;
 		}
 
 	}
